@@ -1,0 +1,75 @@
+.main {
+	display: block;
+	background-color: #7fffd4;
+	padding: 25px;
+	height: 80%;
+	padding-top: 100px;
+}
+
+.content-table {
+	margin: auto;
+	width: 800px;
+}
+
+.form {
+}
+
+.kaiin-list-form {
+	margin: auto;
+	text-align: center;
+	padding-left: 10%;
+}
+
+.input-cell {
+	display: block;
+	width: 300px;
+	height: 250px;
+	margin: 25px;
+	position: relative;
+}
+
+.input-cell:nth-of-type(odd) {
+	float: left;
+}
+
+.input-cell:nth-of-type(even) {
+	float: right;
+}
+
+.kaiin-image {
+	width: 150px;
+	height: 150px;
+	position: absolute;
+	top: 10px;
+	left: 70px;
+}
+
+.input-cell input {
+	position: absolute;
+	top: 180px;
+	left: 70px;
+}
+
+.input-cell span {
+	position: absolute;
+	top: 180px;
+	left: 90px;
+}
+
+.main .login-btn {
+	margin-right: 10%;
+}
+
+.links {
+	background-color: red;
+	margin: 100px;
+	width: 100%;
+}
+
+.top-link {
+	float: right;
+}
+
+html, body {
+	height: 100%;
+}

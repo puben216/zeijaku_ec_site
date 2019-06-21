@@ -1,0 +1,11 @@
+.a-btn {
+	display: inline-block;
+	border: 0.5px solid silver;
+	border-radius: 10px;
+	text-align: center;
+	line-height: 2.5;
+	width: 70px;
+	height: 40px;
+	background-color: silver;
+	text-decoration: none;
+}
