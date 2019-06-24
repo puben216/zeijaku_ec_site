@@ -3,7 +3,7 @@
 	session_regenerate_id(true);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
@@ -14,18 +14,33 @@
 try {
 	require_once('../common/common.php');
 
-	$post = sanitize($_POST);
+	$member_info;
+	
+	
+	$dbh = connect_db();
+	$dbh->query('SET NAMES utf8');
+	$sql;
 
-	$onamae = $post['onamae'];
-	$email = $post['email'];
-	$postal1 = $post['postal1'];
-	$postal2 = $post['postal2'];
-	$address = $post['address'];
-	$tel = $post['tel'];
-	$chumon = $post['chumon'];
-	$pass = $post['pass'];
-	$danjo = $post['danjo'];
-	$birth = $post['birth'];
+	if (isset($_SESSION['member_login'])) {
+		$sql = 'select * from order_tbl where code = ?';
+		$stmt = $dbh->prepare($sql);
+		$stmt->execute([$_SESSION['member_code']]);
+
+		$member_info = $stmt->fetch(PDO::FETCH_ASSOC);
+	} else {
+		$member_info = sanitize($_POST);	
+	}
+
+	$onamae = $member_info['onamae'];
+	$email = $member_info['email'];
+	$postal1 = $member_info['postal1'];
+	$postal2 = $member_info['postal2'];
+	$address = $member_info['address'];
+	$tel = $member_info['tel'];
+	// $chumon = $member_info['chumon'];
+	$pass = $member_info['password'];
+	// $danjo = $member_info['danjo'];
+	$birth = $member_info['birth'];
 
 
 	print $onamae . '様<br>';
@@ -46,12 +61,6 @@ try {
 	$count = $_SESSION['count'];
 	$max = count($cart);
 
-	$dsn = 'mysql:dbname=ec_test_php;host=localhost';
-	$user = 'an';
-	$password = 'password';
-	$dbh = new PDO($dsn, $user, $password);
-	$dbh->query('SET NAMES utf8');
-var_dump($post);
 	for ($i = 0; $i < $max; $i++) {
 		$sql = 'select name, price from mst_product where code=?';
 		$stmt = $dbh->prepare($sql);

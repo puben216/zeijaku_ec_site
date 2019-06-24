@@ -1,24 +1,20 @@
 <?php
-session_start();
-session_regenerate_id(true);
-/*
-if (isset($_SESSION['member_login']) == false) {
-	print 'ようこそゲスト様';
-	print '<a href="member_login.html">ログイン</a>';
-	print '<br>';
-} else {
-	print 'ようこそ';
-	print $_SESSION['member_name'];
-	print '様';
-	print '<a href="member_logout.php">ログアウト</a><br>';
-	print '<br>';
-}
-*/
+	require_once '../common/common.php';
 
-	$dsn = 'mysql:dbname=ec_test_php;host=localhost;';
-	$user = 'an';
-	$password = 'password';
-	$db = new PDO($dsn, $user, $password);
+	session_start();
+	session_regenerate_id(true);
+	if (isset($_SESSION['member_login']) == false) {
+		print 'ようこそゲスト様';
+		print '<br>';
+	} else {
+		print 'ようこそ';
+		print $_SESSION['member_name'];
+		print '様';
+		print '<a href="member_logout.php">ログアウト</a><br>';
+		print '<br>';
+	}
+var_dump($_SESSION);
+	$db = connect_db();
 	$db->query('set names utf8');
 
 	$sql = 'select name, price, code from mst_product';
@@ -41,6 +37,6 @@ if (isset($_SESSION['member_login']) == false) {
 	print '<br>';
 	print '<a href="mise_cartlook.php">カートを見る</a><br>';
 	print '<a href="clear_cart.php">カートを空にする</a><br>';
-	print '<a href="mise_form.html">購入手続き</a><br>';
+	print '<a href="mise_form.php">購入手続き</a><br>';
 	print '<a href="member_login.html">メンバーログイン</a><br>';
 ?>

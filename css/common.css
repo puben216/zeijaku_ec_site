@@ -9,3 +9,15 @@
 	background-color: silver;
 	text-decoration: none;
 }
+
+.sm-input-box {
+	width: 50px;
+}
+
+.md-input-box {
+	width: 100px;
+}
+
+.lg-input-box {
+	width: 200px;
+}
