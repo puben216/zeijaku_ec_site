@@ -20,6 +20,12 @@
 		return $after;
 	}
 
+	function createCsrftoken() {
+		$TOKEN_LENGTH = 16;
+		$token_byte = openssl_random_pseudo_bytes($TOKEN_LENGTH);
+		return bin2hex($token_byte);
+	}
+
 	function pull_year() {
 		$min = 2017;
 		$max = 2019;

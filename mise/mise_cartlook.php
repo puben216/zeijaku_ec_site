@@ -1,6 +1,8 @@
 <?php
-session_start();
-session_regenerate_id(true);
+	require_once '../common/common.php';
+
+	session_start();
+	session_regenerate_id(true);
 /*
 if (isset($_SESSION['member_login']) == false) {
 	print 'ようこそゲスト様';
@@ -15,10 +17,7 @@ if (isset($_SESSION['member_login']) == false) {
 }
 */
 
-	$dsn = 'mysql:dbname=ec_test_php;host=localhost;';
-	$user = 'an';
-	$password = 'password';
-	$db = new PDO($dsn, $user, $password);
+	$db = connect_db();
 	$db->query('set names utf8');
 
 	if (isset($_SESSION['cart']) == true) {
@@ -36,8 +35,7 @@ if (isset($_SESSION['member_login']) == false) {
 		print '<a href="mise_list.php">商品一覧へ戻る</a>';
 		exit();
 	}
-var_dump($count);
-var_dump($_SESSION);
+
 	foreach ($cart as $key => $value) {
 		$sql = 'select name, price, code from mst_product where code = ?';
 		$stmt = $db->prepare($sql);
@@ -91,7 +89,5 @@ var_dump($_SESSION);
 	if (isset($_SESSION['member_login']) == true) {
 		print '<a href="mise_easy_check.php">会員簡単注文へ進む</a><br>';
 	}
-
-
 ?>
 

@@ -13,7 +13,7 @@
 		print '<a href="member_logout.php">ログアウト</a><br>';
 		print '<br>';
 	}
-var_dump($_SESSION);
+
 	$db = connect_db();
 	$db->query('set names utf8');
 

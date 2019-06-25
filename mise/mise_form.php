@@ -53,8 +53,7 @@
 	$tel = '';
 
 	$is_login = isset($_SESSION['member_login']) && $_SESSION['member_login'] == 1;
-var_dump($is_login);
-var_dump($_SESSION);
+
 	if ($is_login) {
 		$db = connect_db();
 		$db->query('set names utf8');
@@ -71,13 +70,13 @@ var_dump($_SESSION);
 		$postal2 = $rec['postal2'];
 		$address = $rec['address'];
 		$tel = $rec['tel'];
-var_dump($rec);
+
 		$db = null;
 	}
 
 
 	print 'お名前<br>		';
-	print '<input type="text" name="onamae" class="lg-input-box" value="' . $onamae . '"><br>';
+	print '<input type="text" name="name" class="lg-input-box" value="' . $onamae . '"><br>';
 	print 'メールアドレス<br>';
 	print '<input type="text" name="email" class="lg-input-box" value="' . $email . '"><br>';
 	print '郵便番号<br>';

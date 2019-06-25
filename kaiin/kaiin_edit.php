@@ -16,6 +16,11 @@
 <html lang="ja">
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" href="../common/css/common.css">
+	<link rel="stylesheet" href="../common/css/header.css">
+	<link rel="stylesheet" href="../common/css/footer.css">
+	<link rel="stylesheet" href="../common/css/navi.css">
+	<link rel="stylesheet" href="../common/css/side.css">
 	<style>
 		.my-profile {
 			width: 200px;
@@ -26,6 +31,9 @@
 </head>
 <body>
 <?php
+		require_once('../common/html/header.html');
+		require_once('../common/html/navi.html');
+
 		try {
 
 			//　XSSの脆弱性のため、サニタイジングしない
@@ -57,7 +65,7 @@
 ?>
 		<h3>スタッフ修正</h3><br>
 		スタッフコード：<br><?php print $kaiin_code ?><br>
-		<form action="kaiin_edit_check.php" method="post">
+		<form action="csrf_ajax_test.php" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="code" value="<?php print $kaiin_code; ?>"><br>
 				会員区分：<br>
 				<?php print $rec['kanrisha'] ? '管理者' : '一般' ?><br><br>

@@ -1,21 +1,28 @@
 <?php
+	require_once('../common/common.php');
+
 	session_start();
 	session_regenerate_id(true);
+
+	if ($_POST['csrf_token'] != $_SESSION['csrf_token']) {
+		print '不正な操作が行われました。';
+		exit();
+	}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>商品購入完了</title>
 </head>
 <body>
 <?php
 
-try {
-	require_once('../common/common.php');
+try {	
 
 	$member_info;
-	
+	$is_login = isset($_SESSION['member_login']) && $_SESSION['member_login'] == 1;
+	var_dump($_SESSION);
 	
 	$dbh = connect_db();
 	$dbh->query('SET NAMES utf8');
@@ -31,15 +38,15 @@ try {
 		$member_info = sanitize($_POST);	
 	}
 
-	$onamae = $member_info['onamae'];
+	$onamae = $member_info['name'];
 	$email = $member_info['email'];
 	$postal1 = $member_info['postal1'];
 	$postal2 = $member_info['postal2'];
 	$address = $member_info['address'];
 	$tel = $member_info['tel'];
-	// $chumon = $member_info['chumon'];
+	$chumon = $member_info['chumon'];
 	$pass = $member_info['password'];
-	// $danjo = $member_info['danjo'];
+	$danjo = $member_info['danjo'];
 	$birth = $member_info['birth'];
 
 
@@ -86,8 +93,8 @@ try {
 	$stmt->execute();
 
 	$last_member = 0;
-	if ($chumon == 'chumontouroku') {
-		var_dump('chumon');
+	if (!$is_login && $chumon == 'chumontouroku') {
+		
 		$sql = 'insert into order_member(password, name, email, postal1, postal2, address, tel, danjo, born) values(?,?,?,?,?,?,?,?,?)';
 		$stmt = $dbh->prepare($sql);
 		$data = [];
@@ -144,7 +151,7 @@ try {
 
 	$dbh = null;
 
-	if ($chumon == 'chumontouroku') {
+	if (!$is_login && $chumon == 'chumontouroku') {
 		print '会員登録が完了しました。<br>';
 		print '次回からメールアドレスとパスワードでログインください<br>';
 		print 'ご注文が簡単にできるようなります<br>';
@@ -166,7 +173,7 @@ try {
 	$honbun .= "FAX：　33333333333\n";
 	$honbun .= "\n";
 
-	if ($chumon == 'chumontouroku') {
+	if (!$is_login && $chumon == 'chumontouroku') {
 		$honbun .= '会員登録が完了しました。<br>';
 		$honbun .= '次回からメールアドレスとパスワードでログインください<br>';
 		$honbun .= 'ご注文が簡単にできるようなります<br>';
