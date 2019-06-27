@@ -9,4 +9,8 @@
 	</span>
 </div>
 
-<div class="bread-zone">aaa</div>
+<div class="bread-zone">
+	<?php
+		print 'bread';
+	?>
+</div>

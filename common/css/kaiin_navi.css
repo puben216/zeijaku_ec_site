@@ -1,0 +1,38 @@
+@charset "utf-8";
+
+.bread-zone {
+	height: 30px;
+	background-color: pink;
+}
+
+.nav-container {
+	height: 40px;
+	margin: 0;
+	background-color: yellow;			
+}
+
+.cart-info {
+	display: inline-block;
+	background-color: blue;
+	height: 100%;
+	float: right;
+	text-decoration: none;
+	transition: opacity 0.8s;
+	color: #fff;
+	font-size: 1.2rem;
+}
+
+.cart-info:hover {
+	opacity: 0.4;
+}
+
+.cart-info span {
+	
+}
+
+.cart-info img {
+	width: 80px;
+	height: 100%;
+	background-color: blue;
+	background-size: cover;
+}

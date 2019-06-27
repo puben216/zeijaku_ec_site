@@ -4,10 +4,12 @@
 	session_start();
 	session_regenerate_id(true);
 
+	// Csrf対策
 	if ($_POST['csrf_token'] != $_SESSION['csrf_token']) {
 		print '不正な操作が行われました。';
 		exit();
 	}
+	unset($_SESSION['csrf_token']);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -22,8 +24,7 @@ try {
 
 	$member_info;
 	$is_login = isset($_SESSION['member_login']) && $_SESSION['member_login'] == 1;
-	var_dump($_SESSION);
-	
+		
 	$dbh = connect_db();
 	$dbh->query('SET NAMES utf8');
 	$sql;
@@ -35,11 +36,13 @@ try {
 
 		$member_info = $stmt->fetch(PDO::FETCH_ASSOC);
 	} else {
-		$member_info = sanitize($_POST);	
+		$member_info = sanitize($_SESSION['inputs']);	
 	}
 
 	$onamae = $member_info['name'];
-	$email = $member_info['email'];
+	//　メールヘッダーインジェクションように
+	$email = $_POST['email'];
+	// $email = $member_info['email'];
 	$postal1 = $member_info['postal1'];
 	$postal2 = $member_info['postal2'];
 	$address = $member_info['address'];
@@ -150,6 +153,7 @@ try {
 	$stmt->execute();
 
 	$dbh = null;
+	$chumontoroku = '';
 
 	if (!$is_login && $chumon == 'chumontouroku') {
 		print '会員登録が完了しました。<br>';
@@ -174,34 +178,31 @@ try {
 	$honbun .= "\n";
 
 	if (!$is_login && $chumon == 'chumontouroku') {
-		$honbun .= '会員登録が完了しました。<br>';
-		$honbun .= '次回からメールアドレスとパスワードでログインください<br>';
-		$honbun .= 'ご注文が簡単にできるようなります<br>';
-		$honbun .= '<br>';
+		$honbun .= "会員登録が完了しました。\n";
+		$honbun .= "次回からメールアドレスとパスワードでログインください\n";
+		$honbun .= "ご注文が簡単にできるようなります\n";
+		$honbun .= "\n";
 	}
 
 	$honbun .= "◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇\n";
 
-	// print '<br>';
-	// print nl2br($honbun);
 
-	/*
 	$title = 'ご注文ありがとうございます。';
 	$header = 'From:info@';
-	$honbun = html_entity_decode($honbun, $ENT_QUOTES, 'UTF-8');
+	$custom_honbun = html_entity_decode($honbun, ENT_QUOTES, 'UTF-8');
 	mb_language('Japanese');
 	mb_internal_encoding('UTF-8');
-	mb_send_mail($email, $title, $honbun, $header);
+	mb_send_mail($email, $title, $custom_honbun, $header);
 
 	// miseあて
 	$title = '注文がありました。';
 	$header = 'From:info@';
-	$honbun = html_entity_decode($honbun, $ENT_QUOTES, 'UTF-8');
+	$mise_honbun = html_entity_decode($honbun, ENT_QUOTES, 'UTF-8');
 	mb_language('Japanese');
 	mb_internal_encoding('UTF-8');
 	// miseあてemail
-	mb_send_mail('test@email.cocooom.jpp', $title, $honbun, $header);
-	*/
+	mb_send_mail('test@email.cocooom.jpp', $title, $mise_honbun, $header);
+
 
 } catch (Exception $e) {
 	print $e;

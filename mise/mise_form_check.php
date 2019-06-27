@@ -32,6 +32,8 @@ $_SESSION['csrf_token'] = $csrf_token;
 
 
 $ok_flg = true;
+
+// メール改ざんの脆弱性
 if ($onamae == '') {
 	print 'お名前が入力されていません。<br><br>';
 	$ok_flg = false;
@@ -41,6 +43,7 @@ if ($onamae == '') {
 	print '<br><br>';
 }
 
+// メールヘッダーインジェクション対策
 if (preg_match('/^[\.\-\w]+@[\.\-\w]+\.([a-z]+)$/', $email) == 0) {
 	print 'メールアドレスを正確に入力してください。<br><br>';
 	$ok_flg = false;
@@ -50,8 +53,8 @@ if (preg_match('/^[\.\-\w]+@[\.\-\w]+\.([a-z]+)$/', $email) == 0) {
 	print '<br><br>';
 }
 
-if (preg_match('/^[0-9]+$/', $postal1) == 0) {
-	print '郵便番号は半角数字で入力してください。<br><br>';
+if (preg_match('/^\d{3}$/', $postal1) == 0) {
+	print '郵便番号（前）は半角数字3文字で入力してください。<br><br>';
 	$ok_flg = false;
 } else {
 	print '郵便番号<br>';
@@ -59,11 +62,12 @@ if (preg_match('/^[0-9]+$/', $postal1) == 0) {
 	print '<br><br>';
 }
 
-if (preg_match('/^[0-9]+$/', $postal2) == 0) {
-	print '郵便番号は半角数字で入力してください。<br><br>';
+if (preg_match('/^\d{4}$/', $postal2) == 0) {
+	print '郵便番号（後）は半角数字4文字で入力してください。<br><br>';
 	$ok_flg = false;
 }
 
+// 脆弱性あり
 if ($address == '') {
 	print '住所が入力されていません。<br><br>';
 	$ok_flg = false;
@@ -110,6 +114,18 @@ if ($chumon == 'chumontouroku') {
 
 if ($ok_flg === true) {
 	print '<form action="mise_form_done.php" method="post">';
+	$inputs = [];
+	$inputs['name'] = $onamae;
+	$inputs['email'] = $email;
+	$inputs['postal1'] = $postal1;
+	$inputs['postal2'] = $postal2;
+	$inputs['tel'] = $tel;
+	$inputs['chumon'] = $chumon;
+	$inputs['password'] = $pass;
+	$inputs['danjo'] = $danjo;
+	$inputs['birth'] = $birth;
+	$_SESSION['inputs'] = $inputs;
+	/* sessionへ格納にする　脆弱性減らす
 	print '<input type="hidden" name="name" value="'. $onamae .'">';
 	print '<input type="hidden" name="email" value="'. $email .'">';
 	print '<input type="hidden" name="postal1" value="'. $postal1 .'">';
@@ -120,6 +136,9 @@ if ($ok_flg === true) {
 	print '<input type="hidden" name="password" value="'. $pass .'">';
 	print '<input type="hidden" name="danjo" value="'. $danjo .'">';
 	print '<input type="hidden" name="birth" value="'. $birth .'">';
+	*/
+	//　メールヘッダーインジェクションように
+	print '<input type="hidden" name="email" value="'. $email .'">';
 	print '<input type="hidden" name="csrf_token" value="'. $csrf_token .'">';
 	print '<input type="button" onclick="history.back()" value="戻る">';
 	print '<input type="submit" value="OK"><br>';
