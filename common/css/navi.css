@@ -8,31 +8,17 @@
 .nav-container {
 	height: 40px;
 	margin: 0;
-	background-color: yellow;			
+	background-color: #7fffd4;			
 }
 
-.cart-info {
-	display: inline-block;
-	background-color: blue;
-	height: 100%;
+.login-info {
+	float: left;
+}
+
+.logout {
 	float: right;
-	text-decoration: none;
-	transition: opacity 0.8s;
-	color: #fff;
-	font-size: 1.2rem;
 }
 
-.cart-info:hover {
-	opacity: 0.4;
-}
-
-.cart-info span {
-	
-}
-
-.cart-info img {
-	width: 80px;
-	height: 100%;
-	background-color: blue;
-	background-size: cover;
+.awe-grey {
+	color: #c0c0c0;
 }

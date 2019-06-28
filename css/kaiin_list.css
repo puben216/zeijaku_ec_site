@@ -1,17 +1,23 @@
-.main {
-	display: block;
-	background-color: #7fffd4;
+.main-container {
+	width: 80%;
+	background-color: #fff;
 	padding: 25px;
-	height: 80%;
-	padding-top: 100px;
+	padding-top: 10px;
+	float: left;
+	margin: auto;
 }
 
-.content-table {
-	margin: auto;
-	width: 800px;
+.main-title {
+	text-align: center;
+	padding: 0;
+	margin: 5px;
 }
 
 .form {
+}
+
+.kaiin-zone {
+	overflow-y: auto;
 }
 
 .kaiin-list-form {
@@ -23,7 +29,7 @@
 .input-cell {
 	display: block;
 	width: 300px;
-	height: 250px;
+	height: 200px;
 	margin: 25px;
 	position: relative;
 }
@@ -68,8 +74,4 @@
 
 .top-link {
 	float: right;
-}
-
-html, body {
-	height: 100%;
 }

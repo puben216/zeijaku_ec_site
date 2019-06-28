@@ -1,11 +1,6 @@
 <?php
 	session_start();
 	session_regenerate_id(true);
-	if (isset($_SESSION['login']) == false) {
-		print 'ログインされていません。';
-		print '<a href="../kaiin_login/kaiin_login.html">ログイン画面へ</a>';
-		exit();
-	}
 ?>
 
 <!DOCTYPE html>
@@ -14,23 +9,28 @@
 	<meta charset="UTF-8">
 	<title>会員リスト</title>
 	<link rel="stylesheet" href="../css/normalize.css">
+	<link rel="stylesheet" href="../common/css/font-awesome/css/all.css"> 
+	<link rel="stylesheet" href="../common/css/kaiin_header.css">
+	<link rel="stylesheet" href="../common/css/footer.css">
+	<link rel="stylesheet" href="../common/css/kaiin_navi.css">
+	<link rel="stylesheet" href="../common/css/kaiin_side.css">
 	<link rel="stylesheet" href="../css/kaiin_list.css">
 </head>
 <body>
-	<header class="header">
-		<?php print $_SESSION['kaiin_name'] . 'さんログイン中<br>'; ?>
-	</header>
+	<?php 
+		require_once('../common/html/kaiin_header.php');
+		require_once('../common/html/kaiin_navi.php');
+		require_once('../common/common.php');
+	?>
 
 	<div class="main">
-		<div class="content-table">
-			<h2 class="main-title">会員一覧</h2><br>
+		<div class="main-container">
+			<h2 class="main-title">会員一覧</h2>
 			<form action="kaiin_branch.php" method="post" class="form kaiin-list-form">
-<?php
+				<div class="kaiin-zone">
+	<?php
 		try {
-			$dsn = 'mysql:dbname=ec_test_php;host=localhost;';
-			$user = 'an';
-			$password = 'password';
-			$db = new PDO($dsn, $user, $password);
+			$db = connect_db();
 			$db->query('set names utf8');
 
 			$sql = 'select code, name from mst_tbl';
@@ -57,16 +57,19 @@
 				print $e;
 				exit();
 		} 
-?>
+?>	
 
+				</div>
 				<input type="submit" class="btn" name="add" value="追加">
 				<input type="submit" class="btn" name="disp" value="参照">
 				<input type="submit" class="btn" name="edit" value="修正">
 				<input type="submit" class="btn" name="delete" value="削除">
 			</form>
 		</div>
-		<a href="../kaiin_top.php" class="top-link">トップ画面へ</a>
+		<?php require_once '../common/html/kaiin_side.php'; ?>
 	</div>
+	
+	<?php require_once '../common/html/footer.php'; ?>
 
 </body>
 </html>

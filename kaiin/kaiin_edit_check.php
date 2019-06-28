@@ -32,6 +32,9 @@ $kaiin_pass2 = htmlspecialchars($kaiin_pass2);
 
 $ok_flag = true;
 
+require_once '../common/common.php';
+var_dump(make_bread($_SERVER['PHP_SELF']));
+
 if ($kaiin_code == '') {
 	print '会員コードが入力されていません<br>';
 	$ok_flag = false;
