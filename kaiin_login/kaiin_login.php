@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 	<meta charset="UTF-8">
-	<title>kaiin_login</title>
+	<title>会員ログイン</title>
 	<link rel="stylesheet" href="../css/normalize.css">
 	<link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
-	<header class="header">aaa		
-	</header>
+	<?php
+		require_once('../common/html/header.php');
+		require_once('../common/common.php');
+	?>
 	<div class="main">
 		<h1 class="login">ログイン</h1>
 		<form action="kaiin_login_check.php" method="post" class="form kaiin-login-form clearfix">
@@ -22,6 +24,6 @@
 		</form>
 	</div>
 
-	<footer class="footer">bbb</footer>
+	<?php require_once 'common/html/footer.php'; ?>
 </body>
 </html>
